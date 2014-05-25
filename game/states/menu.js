@@ -1,11 +1,19 @@
-
 'use strict';
+
+var player = require('../prefabs/player');
+
 function Menu() {}
 
 Menu.prototype = {
 
   preload: function() {
 
+      this.game.physics.startSystem(Phaser.Physics.ARCADE);
+
+      this.game.input.keyboard.addKeyCapture([
+          Phaser.Keyboard.LEFT,
+          Phaser.Keyboard.RIGHT
+      ]);
   },
 
   create: function() {
@@ -75,11 +83,8 @@ Menu.prototype = {
     this.explosion_b.scale.x = 1;
     this.explosion_b.scale.y = 1;
 
-    this.player = this.game.add.sprite(two, two, 'sprites');
-    this.player.frameName = 'player';
-    this.player.anchor.setTo(0, 0);
-    this.player.scale.x = 1;
-    this.player.scale.y = 1;
+    this.player = new player(this.game, two, two);
+    this.game.add.existing(this.player);
 
     this.shot01_a = this.game.add.sprite(0 / 7 * one + three, two, 'sprites');
     this.shot01_a.frameName = 'shot01_a';
@@ -156,6 +161,8 @@ Menu.prototype = {
 
   update: function() {
 
+      this.game.input.keyboard.isDown(Phaser.Keyboard.LEFT) && this.player.moveLeft();
+      this.game.input.keyboard.isDown(Phaser.Keyboard.RIGHT) && this.player.moveRight();
   }
 };
 
