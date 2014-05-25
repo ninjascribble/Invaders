@@ -8,6 +8,8 @@ var Alien = function(game, x, y, type) {
 
     this.anchor.x = 0.5;
     this.anchor.y = 0.5;
+    this.scale.x = .5;
+    this.scale.y = .5;
     this.type = type || Alien.A;
     this.game.physics.arcade.enableBody(this);
     this.animations.add('normal', this.type, 2, true);

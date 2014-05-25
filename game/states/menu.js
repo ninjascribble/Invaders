@@ -25,20 +25,48 @@ Menu.prototype = {
 
   create: function() {
 
-    var zero = this.game.width * 1/5;
-    var one = this.game.width * 2/5;
-    var two = this.game.width * 3/5;
-    var three = this.game.width * 4/5;
+    var rows = [
+        this.game.height * 1/8,
+        this.game.height * 2/8,
+        this.game.height * 3/8,
+        this.game.height * 4/8,
+        this.game.height * 5/8
+    ];
+
+    var cols = [
+        this.game.width * 1/10,
+        this.game.width * 2/10,
+        this.game.width * 3/10,
+        this.game.width * 4/10,
+        this.game.width * 5/10,
+        this.game.width * 6/10,
+        this.game.width * 7/10,
+        this.game.width * 8/10,
+        this.game.width * 9/10
+    ];
+
+    console.dir(cols);
 
     this.game.add.existing(this.enemies);
     this.game.add.existing(this.bullets);
 
-    this.enemies.add(new alien(this.game, zero, zero, alien.A));
-    this.enemies.add(new alien(this.game, one, zero, alien.B));
-    this.enemies.add(new alien(this.game, two, zero, alien.C));
-    this.enemies.add(new alien(this.game, three, zero, alien.D));
+    for (var i = 0; i < cols.length; i++) {
+        this.enemies.add(new alien(this.game, cols[i], rows[0], alien.A));
+    }
 
-    this.player = new player(this.game, this.game.width / 2, two);
+    for (var i = 0; i < cols.length; i++) {
+        this.enemies.add(new alien(this.game, cols[i], rows[1], alien.B));
+    }
+
+    for (var i = 0; i < cols.length; i++) {
+        this.enemies.add(new alien(this.game, cols[i], rows[2], alien.C));
+    }
+
+    for (var i = 0; i < cols.length; i++) {
+        this.enemies.add(new alien(this.game, cols[i], rows[3], alien.D));
+    }
+
+    this.player = new player(this.game, this.game.width / 2, this.game.height);
     this.game.add.existing(this.player);
   },
 
@@ -51,10 +79,12 @@ Menu.prototype = {
         this.bullets.add(new bullet(this.game, this.player.x, this.player.y - this.player.height, bullet.B));
       }
 
-      this.game.physics.arcade.collide(this.bullets, this.enemies, function(sp1, sp2) {
-        this.game.add.existing(new explosion(this.game, sp2.x, sp2.y));
-        sp1.kill();
-        sp2.kill();
+      this.game.physics.arcade.collide(this.bullets, this.enemies, function(bullet, enemy) {
+        var exp = new explosion(this.game, enemy.x, enemy.y);
+        exp.scale = enemy.scale;
+        this.game.add.existing(exp);
+        bullet.kill();
+        enemy.kill();
       }, null,  this);
   }
 };
