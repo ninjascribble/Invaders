@@ -4,7 +4,11 @@ var KEY = 'sprites';
 var FRAME_NAME = 'player';
 
 var Player = function(game, x, y) {
+
   Phaser.Sprite.call(this, game, x, y, KEY, FRAME_NAME);
+
+  this.anchor.x = 0.5;
+  this.anchor.y = 0.5;
   this.game.physics.arcade.enableBody(this);
 };
 

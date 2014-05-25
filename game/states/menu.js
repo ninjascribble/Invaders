@@ -2,6 +2,7 @@
 
 var player = require('../prefabs/player');
 var alien = require('../prefabs/alien');
+var bullet = require('../prefabs/bullet');
 
 function Menu() {}
 
@@ -19,10 +20,10 @@ Menu.prototype = {
 
   create: function() {
 
-    var zero = 24;
-    var one = 24 * 2 + 104;
-    var two = 24 * 3 + 104 * 2;
-    var three = 24 * 4 + 104 * 3;
+    var zero = this.game.width * 1/5;
+    var one = this.game.width * 2/5;
+    var two = this.game.width * 3/5;
+    var three = this.game.width * 4/5;
 
     this.alien01 = new alien(this.game, zero, zero, alien.A);
     this.game.add.existing(this.alien01);
@@ -36,8 +37,14 @@ Menu.prototype = {
     this.alien04 = new alien(this.game, three, zero, alien.D);
     this.game.add.existing(this.alien04);
 
-    this.player = new player(this.game, two, three);
+    this.player = new player(this.game, this.game.width / 2, two);
     this.game.add.existing(this.player);
+
+    this.bullet = new bullet(this.game, one, one, bullet.A);
+    this.game.add.existing(this.bullet);
+
+    this.bullet = new bullet(this.game, two, one, bullet.B);
+    this.game.add.existing(this.bullet);
   },
 
   update: function() {
