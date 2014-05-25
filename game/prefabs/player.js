@@ -10,6 +10,7 @@ var Player = function(game, x, y) {
   this.anchor.x = 0.5;
   this.anchor.y = 0.5;
   this.game.physics.arcade.enableBody(this);
+  this.body.collideWorldBounds = true;
   this.canFire = true;
 };
 
