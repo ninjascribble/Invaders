@@ -12,6 +12,9 @@ var Bullet = function(game, x, y, type) {
     this.type = type || Bullet.A;
     this.animations.add('normal', this.type, 10, true);
     this.animations.play('normal');
+    this.body.velocity.y = -400;
+    this.checkWorldBounds = true;
+    this.outOfBoundsKill = true;
 };
 
 Bullet.prototype = Object.create(Phaser.Sprite.prototype);

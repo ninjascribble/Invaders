@@ -14,7 +14,8 @@ Menu.prototype = {
 
       this.game.input.keyboard.addKeyCapture([
           Phaser.Keyboard.LEFT,
-          Phaser.Keyboard.RIGHT
+          Phaser.Keyboard.RIGHT,
+          Phaser.Keyboard.SPACEBAR
       ]);
   },
 
@@ -39,18 +40,17 @@ Menu.prototype = {
 
     this.player = new player(this.game, this.game.width / 2, two);
     this.game.add.existing(this.player);
-
-    this.bullet = new bullet(this.game, one, one, bullet.A);
-    this.game.add.existing(this.bullet);
-
-    this.bullet = new bullet(this.game, two, one, bullet.B);
-    this.game.add.existing(this.bullet);
   },
 
   update: function() {
 
       this.game.input.keyboard.isDown(Phaser.Keyboard.LEFT) && this.player.moveLeft();
       this.game.input.keyboard.isDown(Phaser.Keyboard.RIGHT) && this.player.moveRight();
+
+      if (this.game.input.keyboard.isDown(Phaser.Keyboard.SPACEBAR) && this.player.fire()) {
+        var bb = new bullet(this.game, this.player.x, this.player.y - this.player.height, bullet.B);
+        this.game.add.existing(bb);
+      }
   }
 };
 

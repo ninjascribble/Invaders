@@ -10,6 +10,7 @@ var Player = function(game, x, y) {
   this.anchor.x = 0.5;
   this.anchor.y = 0.5;
   this.game.physics.arcade.enableBody(this);
+  this.canFire = true;
 };
 
 Player.prototype = Object.create(Phaser.Sprite.prototype);
@@ -26,4 +27,18 @@ Player.prototype.moveLeft = function() {
 
 Player.prototype.moveRight = function() {
     this.body.velocity.x += 75;
+};
+
+Player.prototype.fire = function() {
+
+    if (this.canFire == true) {
+        this.canFire = false;
+        this.game.time.events.add(250, function() {
+            this.canFire = true;
+        }, this);
+        return true;
+    }
+    else {
+        return false;
+    }
 };
