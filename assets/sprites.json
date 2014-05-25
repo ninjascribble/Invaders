@@ -163,11 +163,6 @@
     }
 },
 "meta": {
-	"app": "http://www.codeandweb.com/texturepacker",
-	"version": "1.0",
-	"image": "sprites.png",
-	"format": "RGBA8888",
-	"size": {"w":156,"h":15},
-	"scale": "10"
+	"image": "sprites.png"
 }
 }

@@ -3,8 +3,12 @@
 var player = require('../prefabs/player');
 var alien = require('../prefabs/alien');
 var bullet = require('../prefabs/bullet');
+var explosion = require('../prefabs/explosion');
 
-function Menu() {}
+function Menu() {
+    this.enemies = new Phaser.Group(this.game, null);
+    this.bullets = new Phaser.Group(this.game, null);
+}
 
 Menu.prototype = {
 
@@ -26,17 +30,13 @@ Menu.prototype = {
     var two = this.game.width * 3/5;
     var three = this.game.width * 4/5;
 
-    this.alien01 = new alien(this.game, zero, zero, alien.A);
-    this.game.add.existing(this.alien01);
+    this.game.add.existing(this.enemies);
+    this.game.add.existing(this.bullets);
 
-    this.alien02 = new alien(this.game, one, zero, alien.B);
-    this.game.add.existing(this.alien02);
-
-    this.alien03 = new alien(this.game, two, zero, alien.C);
-    this.game.add.existing(this.alien03);
-
-    this.alien04 = new alien(this.game, three, zero, alien.D);
-    this.game.add.existing(this.alien04);
+    this.enemies.add(new alien(this.game, zero, zero, alien.A));
+    this.enemies.add(new alien(this.game, one, zero, alien.B));
+    this.enemies.add(new alien(this.game, two, zero, alien.C));
+    this.enemies.add(new alien(this.game, three, zero, alien.D));
 
     this.player = new player(this.game, this.game.width / 2, two);
     this.game.add.existing(this.player);
@@ -48,9 +48,14 @@ Menu.prototype = {
       this.game.input.keyboard.isDown(Phaser.Keyboard.RIGHT) && this.player.moveRight();
 
       if (this.game.input.keyboard.isDown(Phaser.Keyboard.SPACEBAR) && this.player.fire()) {
-        var bb = new bullet(this.game, this.player.x, this.player.y - this.player.height, bullet.B);
-        this.game.add.existing(bb);
+        this.bullets.add(new bullet(this.game, this.player.x, this.player.y - this.player.height, bullet.B));
       }
+
+      this.game.physics.arcade.collide(this.bullets, this.enemies, function(sp1, sp2) {
+        this.game.add.existing(new explosion(this.game, sp2.x, sp2.y));
+        sp1.kill();
+        sp2.kill();
+      }, null,  this);
   }
 };
 

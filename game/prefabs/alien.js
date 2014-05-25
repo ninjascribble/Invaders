@@ -8,10 +8,11 @@ var Alien = function(game, x, y, type) {
 
     this.anchor.x = 0.5;
     this.anchor.y = 0.5;
-    this.game.physics.arcade.enableBody(this);
     this.type = type || Alien.A;
+    this.game.physics.arcade.enableBody(this);
     this.animations.add('normal', this.type, 2, true);
     this.animations.play('normal');
+    this.body.immovable = true;
 };
 
 Alien.prototype = Object.create(Phaser.Sprite.prototype);
@@ -24,6 +25,5 @@ Alien.C = ['enemy04_b', 'enemy04_a'];
 Alien.D = ['enemy02_a', 'enemy02_b'];
 
 Alien.prototype.update = function() {
-
 };
 
