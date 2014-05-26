@@ -8,10 +8,10 @@ var Explosion = function(game, x, y) {
 
     this.anchor.x = 0.5;
     this.anchor.y = 0.5;
+    this.scale.x = .5;
+    this.scale.y = .5;
     this.type = Explosion.A;
     this.animations.add('normal', this.type, 10, false);
-    this.animations.play('normal');
-    this.lifespan = 200;
 };
 
 Explosion.prototype = Object.create(Phaser.Sprite.prototype);
@@ -20,7 +20,9 @@ module.exports = Explosion;
 
 Explosion.A = ['explosion_a', 'explosion_b'];
 
-Explosion.prototype.update = function() {
-
+Explosion.prototype.reset = function(x, y, health) {
+    Phaser.Sprite.prototype.reset.call(this, x, y, health);
+    this.animations.play('normal');
+    this.lifespan = 200;
 };
 

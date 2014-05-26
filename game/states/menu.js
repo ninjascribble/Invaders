@@ -6,8 +6,6 @@ var bullet = require('../prefabs/bullet');
 var explosion = require('../prefabs/explosion');
 
 function Menu() {
-    this.enemies = new Phaser.Group(this.game, null);
-    this.bullets = new Phaser.Group(this.game, null);
 }
 
 Menu.prototype = {
@@ -21,6 +19,18 @@ Menu.prototype = {
           Phaser.Keyboard.RIGHT,
           Phaser.Keyboard.SPACEBAR
       ]);
+
+      this.enemies = new Phaser.Group(this.game, null);
+      this.enemies.classType = alien;
+      this.enemies.createMultiple(40);
+
+      this.bullets = new Phaser.Group(this.game, null);
+      this.bullets.classType = bullet;
+      this.bullets.createMultiple(20);
+
+      this.explosions = new Phaser.Group(this.game, null);
+      this.explosions.classType = explosion;
+      this.explosions.createMultiple(20);
   },
 
   create: function() {
@@ -45,25 +55,15 @@ Menu.prototype = {
         this.game.width * 9/10
     ];
 
-    console.dir(cols);
-
     this.game.add.existing(this.enemies);
     this.game.add.existing(this.bullets);
+    this.game.add.existing(this.explosions);
 
     for (var i = 0; i < cols.length; i++) {
-        this.enemies.add(new alien(this.game, cols[i], rows[0], alien.A));
-    }
-
-    for (var i = 0; i < cols.length; i++) {
-        this.enemies.add(new alien(this.game, cols[i], rows[1], alien.B));
-    }
-
-    for (var i = 0; i < cols.length; i++) {
-        this.enemies.add(new alien(this.game, cols[i], rows[2], alien.C));
-    }
-
-    for (var i = 0; i < cols.length; i++) {
-        this.enemies.add(new alien(this.game, cols[i], rows[3], alien.D));
+       this.enemies.getFirstDead().reset(cols[i], rows[0], 1, alien.A);
+       this.enemies.getFirstDead().reset(cols[i], rows[1], 1, alien.B);
+       this.enemies.getFirstDead().reset(cols[i], rows[2], 1, alien.C);
+       this.enemies.getFirstDead().reset(cols[i], rows[3], 1, alien.D);
     }
 
     this.player = new player(this.game, this.game.width / 2, this.game.height);
@@ -76,16 +76,16 @@ Menu.prototype = {
       this.game.input.keyboard.isDown(Phaser.Keyboard.RIGHT) && this.player.moveRight();
 
       if (this.game.input.keyboard.isDown(Phaser.Keyboard.SPACEBAR) && this.player.fire()) {
-        this.bullets.add(new bullet(this.game, this.player.x, this.player.y - this.player.height, bullet.B));
+        this.bullets.getFirstDead().reset(this.player.x, this.player.y - this.player.height, 1, bullet.B);
       }
 
-      this.game.physics.arcade.collide(this.bullets, this.enemies, function(bullet, enemy) {
-        var exp = new explosion(this.game, enemy.x, enemy.y);
-        exp.scale = enemy.scale;
-        this.game.add.existing(exp);
-        bullet.kill();
-        enemy.kill();
-      }, null,  this);
+      this.game.physics.arcade.collide(this.bullets, this.enemies, this.onBulletHitsEnemy, null,  this);
+  },
+
+  onBulletHitsEnemy: function(bullet, enemy) {
+    this.explosions.getFirstDead().reset(enemy.x, enemy.y, 1);
+    bullet.kill();
+    enemy.kill();
   }
 };
 
