@@ -37,21 +37,14 @@ Menu.prototype = {
     ];
 
     var cols = [
-        this.game.width *  2/18,
-        this.game.width *  3/18,
-        this.game.width *  4/18,
-        this.game.width *  5/18,
-        this.game.width *  6/18,
-        this.game.width *  7/18,
-        this.game.width *  8/18,
-        this.game.width *  9/18,
-        this.game.width * 10/18,
-        this.game.width * 11/18,
-        this.game.width * 12/18,
-        this.game.width * 13/18,
-        this.game.width * 14/18,
-        this.game.width * 15/18,
-        this.game.width * 16/18
+        this.game.width *  1/9,
+        this.game.width *  2/9,
+        this.game.width *  3/9,
+        this.game.width *  4/9,
+        this.game.width *  5/9,
+        this.game.width *  6/9,
+        this.game.width *  7/9,
+        this.game.width *  8/9
     ];
 
     this.player = new player(this.game);

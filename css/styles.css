@@ -1,9 +1,11 @@
-body {
+html, body {
   background-color: rgba(76, 76, 76, 1);
+  margin: 0;
+  padding: 0;
 }
 
 #invaders {
-  width: 640px;
+  width: 400px;
   margin-left: auto;
   margin-right: auto;
   cursor: pointer;
