@@ -12,9 +12,9 @@ var Bullet = function(game, x, y, type) {
     this.scale.y = .5;
     this.game.physics.arcade.enableBody(this);
     this.body.setSize(8, 16, 0, 0);
-    this.body.velocity.y = -400;
     this.checkWorldBounds = true;
     this.outOfBoundsKill = true;
+    this.smoothed = false;
 
     this.setType(type);
 };

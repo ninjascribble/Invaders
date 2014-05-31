@@ -8,10 +8,11 @@ var Alien = function(game, x, y, key, frame) {
 
     this.anchor.x = 0.5;
     this.anchor.y = 0.5;
-    this.scale.x = .5;
-    this.scale.y = .5;
+    this.scale.x = .25;
+    this.scale.y = .25;
     this.game.physics.arcade.enableBody(this);
     this.body.immovable = true;
+    this.smoothed = false;
 
     this.setType(Alien.A);
 };

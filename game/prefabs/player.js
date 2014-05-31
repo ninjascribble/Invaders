@@ -14,6 +14,7 @@ var Player = function(game, x, y) {
   this.game.physics.arcade.enableBody(this);
   this.body.collideWorldBounds = true;
   this.canFire = true;
+  this.smoothed = false;
 };
 
 Player.prototype = Object.create(Phaser.Sprite.prototype);

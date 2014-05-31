@@ -1,5 +1,6 @@
 {
   "projectName": "Invaders",
   "gameWidth": "640",
-  "gameHeight": "520"
+  "gameHeight": "520",
+  "transparent": true
 }

@@ -8,10 +8,11 @@ var Explosion = function(game, x, y) {
 
     this.anchor.x = 0.5;
     this.anchor.y = 0.5;
-    this.scale.x = .5;
-    this.scale.y = .5;
+    this.scale.x = .25;
+    this.scale.y = .25;
     this.type = Explosion.A;
     this.animations.add('normal', this.type, 10, false);
+    this.smoothed = false;
 };
 
 Explosion.prototype = Object.create(Phaser.Sprite.prototype);
